@@ -3,32 +3,40 @@
  * @return {string[][]}
  */
 
-const checkAnagram = (str1, str2)=>{
-    const freq = {}
-    const len1 = str1.length
-    if(str1.length != str2.length){
-        return false
-    }else{
-        for(let i=0;i<str1.length;i++){
-            if(freq[str1[i]]=== undefined){
-                freq[str1[i]] = 1
-            }else{
-                freq[str1[i]]++
-            }
-        }
-        for(let i=0;i<str1.length;i++){
-            if(freq[str2[i]]>0){
-                freq[str2[i]]--
-            }
-        }
-
-        const sumfreq = Object.values(freq).reduce((a,b)=>a+b,0)
-        if(sumfreq===0){
-            return true
-        }else{
-            return false
-        }
+const convertToBinary = (str1)=>{
+    const table = {
+        '':0,
+        'a':0,
+        'b':0,
+        'c':0,
+        'd':0,
+        'e':0,
+        'f':0,
+        'g':0,
+        'h':0,
+        'i':0,
+        'j':0,
+        'k':0,
+        'l':0,
+        'm':0,
+        'n':0,
+        'o':0,
+        'p':0,
+        'q':0,
+        'r':0,
+        's':0,
+        't':0,
+        'u':0,
+        'v':0,
+        'w':0,
+        'x':0,
+        'y':0,
+        'z':0
     }
+    for(let i=0;i<str1.length;i++){
+        table[str1[i]]++
+    }
+    return Object.values(table)
 }
 
 
@@ -36,31 +44,17 @@ var groupAnagrams = function(strs) {
     const output = {}
 
     for(let i=0;i<strs.length;i++){
-        const key = Object.keys(output)
-        if(key.length===0){
-            output[strs[i]] = [strs[i]]
+        const binary = convertToBinary(strs[i])
+        if(output[binary]===undefined){
+            output[binary] = [strs[i]]
         }else{
-            let count = 0
-            let currentKey = key[0]
-            for(let j=0;j<key.length;j++){
-                if(checkAnagram(strs[i],key[j])){
-                    count=1
-                    currentKey = key[j]
-                    break;
-                }
-            }
-            if(count==1){
-                output[currentKey].push(strs[i])
-            }else{
-                output[strs[i]] = [strs[i]]
-            }
-
+            output[binary].push(strs[i])
         }
     }
     return Object.values(output)
 };
 
-const strs = ["ddddddddddg","dgggggggggg"]
+const strs = ["a"]
 
-//console.log(groupAnagrams(strs))
-console.log(checkAnagram(strs[0],strs[1]))
+console.log(groupAnagrams(strs))
+//console.log(convertToBinary('eat'))
